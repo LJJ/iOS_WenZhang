@@ -1,0 +1,20 @@
+//
+//  PrefixHeader.pch
+//  WenZhang
+//
+//  Created by LJJ on 11/21/14.
+//  Copyright (c) 2014 LJJ. All rights reserved.
+//
+
+#ifndef WenZhang_PrefixHeader_pch
+#define WenZhang_PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+#import <UIKit/UIKit.h>
+#import <Foundation/Foundation.h>
+
+#import "Constant.h"
+#import "SVProgressHUD.h"
+
+#endif
