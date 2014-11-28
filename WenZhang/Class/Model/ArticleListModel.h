@@ -17,6 +17,12 @@ typedef enum
 
 typedef enum
 {
+    ArticleUpdateAdd,
+    ArticleUpdateUpdate
+}ArticleUpdateType;
+
+typedef enum
+{
     ArticleListActionCheck,
     ArticleListActionCheckFail,
     ArticleListActionTop,
@@ -47,5 +53,20 @@ typedef enum
 - (void)uploadingImage:(UIImage *)image
                       success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                       failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
+
+- (void)updateArticleDataWithAction:(ArticleUpdateType)type
+                             infoId:(NSInteger)infoId
+                              title:(NSString *)title
+                             source:(NSString *)source
+                         authorName:(NSString *)authorName
+                               edit:(NSString *)edit
+                        redirectUrl:(NSString *)redirectUrl
+                             remark:(NSString *)remark
+                            created:(NSString *)created
+                                top:(NSInteger)top
+                         checkState:(NSInteger)checkState
+                            success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                            failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
+
 
 @end

@@ -15,6 +15,20 @@
 @end
 
 @implementation ArticleSourceMenu
+static ArticleSourceMenu* instance ;
+
++ (ArticleSourceMenu *)sharedArticleSourceMenu
+{
+    if (instance == nil) {
+        static dispatch_once_t once;
+        dispatch_once(&once, ^{
+            NSArray *array = [[NSBundle mainBundle] loadNibNamed:@"ArticleSourceMenu" owner:self options:nil];
+            instance = array[0];
+        });
+    }
+    return instance;
+}
+
 - (void)awakeFromNib
 {
     [_menuBackgroundView.layer setMasksToBounds:YES];
@@ -36,10 +50,13 @@
 }
 */
 
-- (void)showFromPoint:(CGPoint)point inView:(UIView *)aView
++ (void)showFromPoint:(CGPoint)point inView:(UIView *)aView
 {
-    self.frame = CGRectMake(point.x-self.frame.size.width/2, point.y, self.frame.size.width, self.frame.size.height);
-    [aView addSubview:self];
+    if (!instance) {
+        [ArticleSourceMenu sharedArticleSourceMenu];
+    }
+    instance.frame = CGRectMake(point.x-instance.frame.size.width/2, point.y, instance.frame.size.width, instance.frame.size.height);
+    [aView addSubview:instance];
 }
 
 - (void)selectButtonAtRow:(NSInteger)row
@@ -78,14 +95,13 @@
     if ([_delegate respondsToSelector:@selector(articleSourceMenuSelectSourceAtRow:)]) {
         [_delegate articleSourceMenuSelectSourceAtRow:0];
     }
-    
 }
 
 - (IBAction)secondAction:(UIButton *)sender {
     [self p_turnOffAllButton];
     sender.selected = YES;
     if ([_delegate respondsToSelector:@selector(articleSourceMenuSelectSourceAtRow:)]) {
-        [_delegate articleSourceMenuSelectSourceAtRow:0];
+        [_delegate articleSourceMenuSelectSourceAtRow:1];
     }
 }
 
@@ -93,7 +109,7 @@
     [self p_turnOffAllButton];
     sender.selected = YES;
     if ([_delegate respondsToSelector:@selector(articleSourceMenuSelectSourceAtRow:)]) {
-        [_delegate articleSourceMenuSelectSourceAtRow:0];
+        [_delegate articleSourceMenuSelectSourceAtRow:2];
     }
 }
 

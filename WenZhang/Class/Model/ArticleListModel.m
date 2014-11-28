@@ -105,7 +105,7 @@
     }
     
     NSDictionary *parameters = @{
-                                 @"infold":@(articleId),
+                                 @"infoId":@(articleId),
                                  @"action":actionStr
                                  };
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
@@ -142,6 +142,51 @@
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
         [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 1.0) name:@"file" fileName:@"image.png" mimeType:@"image/png"];
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlk(self, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failBlk(self,error);
+    }];
+}
+
+- (void)updateArticleDataWithAction:(ArticleUpdateType)type
+                             infoId:(NSInteger)infoId
+                              title:(NSString *)title
+                             source:(NSString *)source
+                         authorName:(NSString *)authorName
+                               edit:(NSString *)edit
+                        redirectUrl:(NSString *)redirectUrl
+                             remark:(NSString *)remark
+                            created:(NSString *)created
+                                top:(NSInteger)top
+                         checkState:(NSInteger)checkState
+                            success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                            failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
+{
+    NSString *actionStr;
+    switch (type) {
+        case ArticleUpdateAdd:
+            actionStr = @"Add";
+            break;
+        case ArticleUpdateUpdate:
+            actionStr = @"Update";
+            break;
+        default:
+            break;
+    }
+    NSDictionary *parameters = @{
+                                 @"action":actionStr,
+                                 @"infoId":@(infoId),
+                                 @"infoTitle":title,
+                                 @"infoSource":source,
+                                 @"infoAuthorName":authorName,
+                                 @"infoEdit":edit,
+                                 @"infoRedirectUrl":redirectUrl,
+                                 @"infoRemark":remark,
+                                 @"infoCreated":created,
+                                 @"infoTop":@(top),
+                                 @"infoCheckState":@(checkState)
+                                 };
+    [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlk(self, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
         failBlk(self,error);

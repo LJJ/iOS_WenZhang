@@ -44,6 +44,12 @@
     [actionSheet showInView:self.view];
 }
 
+- (IBAction)back:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+- (IBAction)postArticle:(UIBarButtonItem *)sender {
+}
 #pragma mark -- UIActionSheet Delegate
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex{
     

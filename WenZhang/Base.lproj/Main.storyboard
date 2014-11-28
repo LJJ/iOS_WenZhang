@@ -56,13 +56,15 @@
                         </button>
                         <barButtonItem key="rightBarButtonItem" title="更多" id="uzn-9K-75H">
                             <connections>
-                                <segue destination="HsW-Zg-SP6" kind="push" id="dZX-qh-ekN"/>
+                                <action selector="showMoreMenue:" destination="vXZ-lx-hvc" id="a47-bw-YNQ"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="articleTV" destination="euj-mh-t2x" id="LLD-df-O8d"/>
                         <outlet property="footerView" destination="3JU-QU-uJA" id="zMX-mF-sCp"/>
+                        <segue destination="VZn-Mr-74o" kind="modal" identifier="LoginSegue" id="dKb-hq-rhU"/>
+                        <segue destination="HsW-Zg-SP6" kind="push" identifier="CreateSegue" id="eVU-Wu-suh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -182,8 +184,16 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" title="添加文章" id="kpK-ZT-Gw8">
-                        <barButtonItem key="leftBarButtonItem" title="返回" id="gP2-di-XqI"/>
-                        <barButtonItem key="rightBarButtonItem" title="发表" id="OFe-cx-bsu"/>
+                        <barButtonItem key="leftBarButtonItem" title="返回" id="gP2-di-XqI">
+                            <connections>
+                                <action selector="back:" destination="HsW-Zg-SP6" id="yqo-yp-CS5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="发表" id="OFe-cx-bsu">
+                            <connections>
+                                <action selector="postArticle:" destination="HsW-Zg-SP6" id="7fu-iD-4aR"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edF-Zx-aWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -237,6 +247,7 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="LR0-Kk-Nl7"/>
                     <connections>
                         <outlet property="password" destination="O5G-Pw-6uc" id="Tj2-hR-l5Y"/>
                         <outlet property="userNameTF" destination="8rh-yW-DzP" id="FRq-w0-LOG"/>

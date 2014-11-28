@@ -17,6 +17,7 @@
 
 @interface ArticleSourceMenu : UIView
 @property (nonatomic, weak) id<ArticleSourceMenuDelegate> delegate;
-- (void)showFromPoint:(CGPoint)point inView:(UIView *)aView;
++ (ArticleSourceMenu *)sharedArticleSourceMenu;
++ (void)showFromPoint:(CGPoint)point inView:(UIView *)aView;
 - (void)selectButtonAtRow:(NSInteger)row;
 @end
