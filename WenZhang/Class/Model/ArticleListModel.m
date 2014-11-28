@@ -7,12 +7,9 @@
 //
 
 #import "ArticleListModel.h"
-#import "QueueController.h"
-#import "ArticleListHandler.h"
 #import "WebRequestUtils.h"
 
-@interface ArticleListModel()<BaseDataHandlerDelegate, NSURLConnectionDelegate>
-@property (nonatomic, strong) ArticleListHandler *handler;
+@interface ArticleListModel()
 @end
 
 @implementation ArticleListModel
@@ -20,7 +17,6 @@
 - (id)init
 {
     if (self = [super init]) {
-        self.handler = [[ArticleListHandler alloc] initWithDelegate:self];
 //        [self.errorDict addEntriesFromDictionary:@{
 //                                                   @"username is not correct":@"用户名不合法",
 //                                                   @"mobile is not correct":@"手机号码不合法",
@@ -40,12 +36,13 @@
     return self;
 }
 
-
-- (void)articleListGetUncensoredListWithAction:(ArticleListType)type
+- (void)articleListGetListWithType:(ArticleListType)type
                                       pageSize:(NSInteger) size
                                      pageIndex:(NSInteger)index
                                        orderBy:(NSString *)order
                                       strWhere:(NSString *)where
+                                       success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                       failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
     NSString *action;
     switch (type) {
@@ -69,17 +66,18 @@
                                  @"orderby":order,
                                  @"strWhere":where
                                  };
-//    [_handler handleUserRequestParameters:parameters method:HTTP_POST];
-//    [[QueueController sharedQueueController] addHandler:_handler withUserInfo:nil];
     
-    NSURLRequest *request = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:[WebRequestUtils appRequestHost]]];
-//    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:request delegate:self];
-//同步请求
-    
+    [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+            successBlk(self, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failBlk(self,error);
+    }];
 }
 
 - (void)articleListHandleSingleWithArticleId:(NSInteger)articleId
                                    andAction:(ArticleListAction)action
+                                     success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                     failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
     NSString *actionStr;
     switch (action) {
@@ -110,60 +108,44 @@
                                  @"infold":@(articleId),
                                  @"action":actionStr
                                  };
-    [_handler handleUserRequestParameters:parameters method:HTTP_POST];
-    [[QueueController sharedQueueController] addHandler:_handler withUserInfo:nil];
+    [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlk(self, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failBlk(self,error);
+    }];
 }
 
 - (void)userLoginWithUserName:(NSString *)userName
                      password:(NSString *)password
+                      success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                      failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
     NSDictionary *parameters = @{
                                  @"username":userName,
                                  @"password":password,
                                  @"action":@"CheckLogin"
                                  };
-    [_handler handleUserRequestParameters:parameters method:HTTP_POST];
-    [[QueueController sharedQueueController] addHandler:_handler withUserInfo:nil];
+    [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlk(self, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failBlk(self,error);
+    }];
 }
 
-#pragma mark - BaseDataHandlerDelegate
-- (void)handlerDidStart:(BaseDataHandler *)handler
+- (void)uploadingImage:(UIImage *)image
+               success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+               failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
-    if (self.startBlk) {
-        self.startBlk(self);
-    }
+    NSDictionary *parameters = @{
+                                 @"action":@"UploadImg"
+                                 };
+    [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters constructingBodyWithBlock:^(id<AFMultipartFormData> formData) {
+        [formData appendPartWithFileData:UIImageJPEGRepresentation(image, 1.0) name:@"file" fileName:@"image.png" mimeType:@"image/png"];
+    } success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlk(self, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failBlk(self,error);
+    }];
 }
 
-- (void)handler:(BaseDataHandler *)handler didSucceedLoadWithData:(NSData *)data
-{
-    NSDictionary *result = [data objectFromJSONData];
-        if (self.successBlk) {
-            self.successBlk(self,result);
-        }
-//    NSDictionary *result = [data objectFromJSONData];
-//    if ([result[@"err_msg"] isEqualToString:@"success"]) {
-//        if (self.successBlk) {
-//            self.successBlk(self,result);
-//        }
-//    }
-//    else
-//    {
-//        if (self.failBlk) {
-//            NSString *errorMsg = [NSString stringWithFormat:@"%@",result[@"err_msg"]];
-//            if (self.errorDict[errorMsg]) {
-//                errorMsg = self.errorDict[errorMsg];
-//            }
-//            NSError *error = [[NSError alloc] initWithDomain:@"com.ljj.HuiLife" code:[result[@"err_no"] integerValue] userInfo:[NSDictionary dictionaryWithObject:errorMsg forKey:NSLocalizedDescriptionKey]];
-//            self.failBlk(self,error);
-//        }
-//    }
-    
-}
-
-- (void)handler:(BaseDataHandler *)handler didFailLoadWithError:(NSError *)error
-{
-    if (self.failBlk) {
-        self.failBlk(self,error);
-    }
-}
 @end

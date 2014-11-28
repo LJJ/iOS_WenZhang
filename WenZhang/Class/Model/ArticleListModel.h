@@ -26,16 +26,26 @@ typedef enum
 }ArticleListAction;
 
 @interface ArticleListModel : BaseDataModel
-- (void)articleListGetUncensoredListWithAction:(ArticleListType)type
+- (void)articleListGetListWithType:(ArticleListType)type
                                       pageSize:(NSInteger) size
                                      pageIndex:(NSInteger)index
                                        orderBy:(NSString *)order
-                                      strWhere:(NSString *)where;
+                                      strWhere:(NSString *)where
+                                       success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                       failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 
 - (void)articleListHandleSingleWithArticleId:(NSInteger)articleId
-                                   andAction:(ArticleListAction)action;
+                                   andAction:(ArticleListAction)action
+                                     success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                     failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 
 - (void)userLoginWithUserName:(NSString *)userName
-                     password:(NSString *)password;
+                     password:(NSString *)password
+                      success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                      failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
+
+- (void)uploadingImage:(UIImage *)image
+                      success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                      failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 
 @end
