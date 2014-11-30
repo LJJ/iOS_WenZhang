@@ -13,9 +13,33 @@
 @property (weak, nonatomic) IBOutlet UITextField *userNameTF;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (nonatomic, strong) ArticleListModel *dataModel;
+@property (weak, nonatomic) IBOutlet UIButton *loginBtn;
+@property (weak, nonatomic) IBOutlet UIButton *backBtn;
+@property (weak, nonatomic) IBOutlet UIView *loginUserBV;
+@property (weak, nonatomic) IBOutlet UIView *loginPasswordBV;
 @end
 
 @implementation LoginViewController
+
+- (void)loadView
+{
+    [super loadView];
+    
+    
+    
+    [_loginBtn.layer setMasksToBounds:YES];
+    [_loginBtn.layer setCornerRadius:5];
+    [_backBtn.layer setMasksToBounds:YES];
+    [_backBtn.layer setCornerRadius:5];
+    [_loginPasswordBV.layer setMasksToBounds:YES];
+    [_loginPasswordBV.layer setCornerRadius:5];
+    [_loginPasswordBV.layer setBorderWidth:1];
+    [_loginPasswordBV.layer setBorderColor:RGB(230, 230, 230).CGColor];
+    [_loginUserBV.layer setMasksToBounds:YES];
+    [_loginUserBV.layer setCornerRadius:5];
+    [_loginUserBV.layer setBorderWidth:1];
+    [_loginUserBV.layer setBorderColor:RGB(230, 230, 230).CGColor];
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -53,6 +77,7 @@
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:CONKeyIsLogin];
         [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:CONkeyPassword];
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
 }
 

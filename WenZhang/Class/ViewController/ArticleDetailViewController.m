@@ -12,6 +12,8 @@
 @interface ArticleDetailViewController ()
 @property (weak, nonatomic) IBOutlet UITextView *detailTextView;
 @property (nonatomic, strong) ArticleListModel *dataModel;
+@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
+@property (weak, nonatomic) IBOutlet UILabel *infoLabel;
 @end
 
 @implementation ArticleDetailViewController
@@ -42,9 +44,11 @@
 - (void)p_loadArticleDetail
 {
     [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:ArticleListActionGetDetail success:^(BaseDataModel *dataModel, id responseObject) {
-//        _detailTextView.text = [NSString stringWithFormat:@"%@\n\n%@\n\n%@",];
+        _detailTextView.text = responseObject[@"Info_Value"];
+        _titleLabel.text = responseObject[@"Info_Title"];
+        _infoLabel.text = [NSString stringWithFormat:@"作者：%@",responseObject[@"Info_AuthorName"]];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
-        
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
 }
 
@@ -55,7 +59,7 @@
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationArticleListChanged object:nil];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
-        [SVProgressHUD showErrorWithStatus:@"fail action"];
+        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
 }
 

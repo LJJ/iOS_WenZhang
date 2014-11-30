@@ -16,7 +16,7 @@
 {
     if (self = [super init]) {
         self.httpManager = [AFHTTPRequestOperationManager manager];
-//        _httpManager.completionQueue = []
+        self.errorDict = [NSMutableDictionary dictionary];
     }
     return self;
 }

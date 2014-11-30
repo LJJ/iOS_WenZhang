@@ -76,7 +76,7 @@
             }
             
         } failure:^(BaseDataModel *dataModel, NSError *error) {
-            [SVProgressHUD showErrorWithStatus:@"图片上传失败"];
+            [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }];
         [self dismissViewControllerAnimated:YES completion:NULL];
     }
@@ -100,17 +100,18 @@
                                     created:@""
                                         top:0
                                  checkState:0
-                                  infoValue:@""
+                                  infoValue:_contentTextView.text
                                      pageId:_pageId
                                    moduleId:_moduleId
-                                    infoimg:_imgUrlStr infoCreate:[[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyUserId] integerValue]
+                                    infoimg:_imgUrlStr
+                                 infoCreate:[[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyUserId] integerValue]
                                     success:^(BaseDataModel *dataModel, id responseObject) {
                                         [SVProgressHUD showSuccessWithStatus:@"成功添加新文章"];
                                         [self.navigationController popViewControllerAnimated:YES];
                                         [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationArticleListChanged object:nil];
                                     }
                                     failure:^(BaseDataModel *dataModel, NSError *error) {
-                                        [SVProgressHUD showErrorWithStatus:@"添加失败"];
+                                        [SVProgressHUD showErrorWithStatus:error.localizedDescription];
                                     }];
 }
 #pragma mark -- UIActionSheet Delegate

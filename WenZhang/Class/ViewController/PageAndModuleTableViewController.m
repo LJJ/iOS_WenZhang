@@ -29,6 +29,12 @@
     // Dispose of any resources that can be recreated.
 }
 
+#pragma mark - action
+- (IBAction)back:(UIBarButtonItem *)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+}
+
+
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

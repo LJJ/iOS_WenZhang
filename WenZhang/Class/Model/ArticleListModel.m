@@ -17,21 +17,6 @@
 - (id)init
 {
     if (self = [super init]) {
-//        [self.errorDict addEntriesFromDictionary:@{
-//                                                   @"username is not correct":@"用户名不合法",
-//                                                   @"mobile is not correct":@"手机号码不合法",
-//                                                   @"password is not correct":@"登录密码不合法",
-//                                                   @"passwords not match":@"两次输入的密码不匹配",
-//                                                   @"username is already exists":@"用户名已存在",
-//                                                   @"mobile is already exists":@"手机号码已注册",
-//                                                   @"user is not exists":@"用户名不存在",
-//                                                   @"nickname illegal":@"昵称不合法",
-//                                                   @"nickname is exists":@"昵称已存在",
-//                                                   @"login fail too much":@"连续登录失败5次\n请稍后再试",
-//                                                   @"account illegal":@"您的账号或密码不正确",
-//                                                   @"password illegal":@"您的账号或密码不正确",
-//                                                   @"login failure":@"您的账号或密码不正确"
-//                                                   }];
     }
     return self;
 }
@@ -70,6 +55,7 @@
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
             successBlk(self, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [error.userInfo setValue:@"加载失败，请重试" forKey:NSLocalizedDescriptionKey];
         failBlk(self,error);
     }];
 }
@@ -111,6 +97,13 @@
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlk(self, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        if (action == ArticleListActionGetDetail) {
+            [error.userInfo setValue:@"加载失败，请重试" forKey:NSLocalizedDescriptionKey];
+        }
+        else
+        {
+            [error.userInfo setValue:@"错做失败，请重试" forKey:NSLocalizedDescriptionKey];
+        }
         failBlk(self,error);
     }];
 }
@@ -120,14 +113,29 @@
                       success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                       failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
+    NSString *errorMsg;
+    if (userName.length < 1) errorMsg = @"用户名不能为空";
+    else if (password.length < 1) errorMsg = @"密码不能为空";
+    if(errorMsg) {
+        NSError *error = [NSError errorWithDomain:@"com.ljj" code:5000 userInfo:@{NSLocalizedDescriptionKey:errorMsg}];
+        failBlk(self,error);
+        return;
+    }
+    
     NSDictionary *parameters = @{
                                  @"username":userName,
                                  @"password":password,
                                  @"action":@"CheckLogin"
                                  };
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        if ([responseObject[@"message"] isEqualToString:@"fail"]) {
+            NSError *error = [NSError errorWithDomain:@"com.ljj" code:5001 userInfo:@{NSLocalizedDescriptionKey:@"用户名或密码错误"}];
+            failBlk(self,error);
+            return;
+        }
         successBlk(self, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [error.userInfo setValue:@"登录失败" forKey:NSLocalizedDescriptionKey];
         failBlk(self,error);
     }];
 }
@@ -184,6 +192,17 @@
                             success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                             failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
+    NSString *errorMsg;
+    if (title.length < 1) errorMsg = @"标题不能为空";
+    else if (value.length < 1) errorMsg = @"内容不能为空";
+    else if (!pageId || !moduleId) errorMsg = @"请选择所属页面和模块";
+    
+    if(errorMsg) {
+        NSError *error = [NSError errorWithDomain:@"com.ljj" code:5000 userInfo:@{NSLocalizedDescriptionKey:errorMsg}];
+        failBlk(self,error);
+        return;
+    }
+    
     NSString *actionStr;
     switch (type) {
         case ArticleUpdateAdd:
@@ -207,7 +226,7 @@
 //                                 @"infoCreated":created,
 //                                 @"infoTop":@(top),
 //                                 @"infoCheckState":@(checkState),
-//                                 @"infoValue":value,
+                                 @"infoValue":value,
                                  @"infoPageID":@(pageId),
                                  @"infoModuleID":@(moduleId),
                                  @"infoimg":img,

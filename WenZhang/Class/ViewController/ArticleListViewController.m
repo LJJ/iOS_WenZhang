@@ -12,6 +12,7 @@
 #import "ArticleDetailViewController.h"
 #import "ArticleSourceMenu.h"
 #import "MoreMenu.h"
+#import "ArticleTableViewCell.h"
 
 @interface ArticleListViewController()<UITableViewDataSource, UITableViewDelegate, ArticleSourceMenuDelegate>
 @property (weak, nonatomic) IBOutlet UITableView *articleTV;
@@ -103,7 +104,9 @@
         [[ArticleSourceMenu sharedArticleSourceMenu] removeFromSuperview];
         return;
     }
-    [ArticleSourceMenu showFromPoint:CGPointMake(self.view.frame.size.width/2, 70) inView:self.view];
+    
+    [[MoreMenu sharedMoreView] removeFromSuperview];
+    [ArticleSourceMenu showFromPoint:CGPointMake(self.view.frame.size.width/2, 10) inView:self.view];
     [ArticleSourceMenu sharedArticleSourceMenu].delegate = self;
     NSInteger row;
     switch (_listType) {
@@ -128,14 +131,13 @@
         [[MoreMenu sharedMoreView] removeFromSuperview];
         return;
     }
-    [MoreMenu showFromPoint:CGPointMake(self.view.frame.size.width-30, 70) inView:self.view];
+    [[ArticleSourceMenu sharedArticleSourceMenu] removeFromSuperview];
+    [MoreMenu showFromPoint:CGPointMake(self.view.frame.size.width-30, 10) inView:self.view];
     
     [[MoreMenu sharedMoreView].firstButton addTarget:self action:@selector(createArticle:) forControlEvents:UIControlEventTouchUpInside];
     [[MoreMenu sharedMoreView].secondButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
 }
-- (IBAction)editArticle:(UIBarButtonItem *)sender {
-    _articleTV.editing = YES;
-}
+
 
 - (void)createArticle:(UIButton *)sender
 {
@@ -164,19 +166,15 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     static NSString *identifier = @"ArticleListCell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
+    ArticleTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier forIndexPath:indexPath];
     if (!cell) {
-        cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
+        cell = [[ArticleTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
-    cell.textLabel.text = _articleData[indexPath.row][@"Info_Title"];
+    [cell setArticleCellWithTitle:_articleData[indexPath.row][@"Info_Title"] articleContent:_articleData[indexPath.row][@"Info_Value"] time:@""];
     return cell;
 }
 
 #pragma mark - UITableView Delegate
-- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    return 110;
-}
 
 - (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
 {
