@@ -54,6 +54,11 @@ typedef enum
                       success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                       failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 
+- (void)articleGetPagesAndModulesWithPageId:(NSInteger)pageId
+                                   moduleWhere:(NSString *)moduleWhere
+                                     success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                     failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
+
 - (void)updateArticleDataWithAction:(ArticleUpdateType)type
                              infoId:(NSInteger)infoId
                               title:(NSString *)title
@@ -65,6 +70,11 @@ typedef enum
                             created:(NSString *)created
                                 top:(NSInteger)top
                          checkState:(NSInteger)checkState
+                          infoValue:(NSString *)value
+                             pageId:(NSInteger)pageId
+                           moduleId:(NSInteger)moduleId
+                            infoimg:(NSString *)img
+                         infoCreate:(NSInteger)userId
                             success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                             failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 

@@ -41,10 +41,21 @@
 #pragma mark - method
 - (void)p_loadArticleDetail
 {
-    [_dataModel articleListHandleSingleWithArticleId:_foldId andAction:ArticleListActionGetDetail success:^(BaseDataModel *dataModel, id responseObject) {
+    [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:ArticleListActionGetDetail success:^(BaseDataModel *dataModel, id responseObject) {
 //        _detailTextView.text = [NSString stringWithFormat:@"%@\n\n%@\n\n%@",];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         
+    }];
+}
+
+- (void)articleAction:(ArticleListAction)method
+{
+    [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:method success:^(BaseDataModel *dataModel, id responseObject) {
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"success %d",method]];
+        [self.navigationController popViewControllerAnimated:YES];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationArticleListChanged object:nil];
+    } failure:^(BaseDataModel *dataModel, NSError *error) {
+        [SVProgressHUD showErrorWithStatus:@"fail action"];
     }];
 }
 
@@ -52,6 +63,19 @@
 - (IBAction)back:(UIBarButtonItem *)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
+
+- (IBAction)checkArticle:(UIButton *)sender {
+    [self articleAction:ArticleListActionCheck];
+}
+
+- (IBAction)topArticle:(UIButton *)sender {
+    [self articleAction:ArticleListActionTop];
+}
+
+- (IBAction)deleteArticle:(UIButton *)sender {
+    [self articleAction:ArticleListActionDelete];
+}
+
 
 
 @end

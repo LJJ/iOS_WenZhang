@@ -7,9 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "ArticleListModel.h"
 
 @interface AppDelegate ()
-
+@property (nonatomic, strong) ArticleListModel *dataModel;
 @end
 
 @implementation AppDelegate
@@ -17,6 +18,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
+    [self launchConfig];
     return YES;
 }
 
@@ -40,6 +42,19 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - method
+
+- (void)launchConfig
+{
+    self.dataModel = [[ArticleListModel alloc] init];
+    [_dataModel articleGetPagesAndModulesWithPageId:0 moduleWhere:@"" success:^(BaseDataModel *dataModel, id responseObject) {
+        [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"rows"] forKey:CONkeyPageAndModule];
+        NSLog(@"success load page and module");
+    } failure:^(BaseDataModel *dataModel, NSError *error) {
+        //how?
+    }];
 }
 
 @end

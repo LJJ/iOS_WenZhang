@@ -8,6 +8,16 @@
 
 #import <Foundation/Foundation.h>
 
+
+#define CONKeyUserName @"CONKeyUserName"
+#define CONKeyUserId @"CONKeyUserId"
+#define CONKeyIsLogin @"CONKeyIsLogin"
+#define CONkeyPassword @"CONkeyPassword"
+#define CONkeyPageAndModule @"CONkeyPageAndModule"
+
+
+static NSString *const CONNotificationArticleListChanged = @"CONNotificationArticleListChanged";
+
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 
 #define RGB(r, g, b) [UIColor colorWithRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1]

@@ -9,5 +9,5 @@
 #import <UIKit/UIKit.h>
 
 @interface ArticleDetailViewController : UIViewController
-@property (nonatomic, assign) NSInteger foldId;
+@property (nonatomic, assign) NSInteger infoId;
 @end

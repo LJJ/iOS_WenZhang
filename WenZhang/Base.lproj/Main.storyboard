@@ -12,7 +12,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="euj-mh-t2x">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="euj-mh-t2x">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -28,9 +28,6 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="2w5-bY-dG3" id="Wvh-Ze-PhM">
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Bus-7P-EZv" kind="push" identifier="ArticalDetailSegue" id="u9L-lJ-MZm"/>
-                                        </connections>
                                     </tableViewCell>
                                 </prototypes>
                                 <connections>
@@ -43,7 +40,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="teB-OG-Qk4">
                         <nil key="title"/>
-                        <barButtonItem key="leftBarButtonItem" title="编辑" id="F89-2H-6RT"/>
+                        <barButtonItem key="leftBarButtonItem" title="编辑" id="F89-2H-6RT">
+                            <connections>
+                                <action selector="editArticle:" destination="vXZ-lx-hvc" id="Mm7-n5-vgz"/>
+                            </connections>
+                        </barButtonItem>
                         <button key="titleView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="BrS-kv-gvC">
                             <rect key="frame" x="96" y="7" width="128" height="30"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -65,6 +66,7 @@
                         <outlet property="footerView" destination="3JU-QU-uJA" id="zMX-mF-sCp"/>
                         <segue destination="VZn-Mr-74o" kind="modal" identifier="LoginSegue" id="dKb-hq-rhU"/>
                         <segue destination="HsW-Zg-SP6" kind="push" identifier="CreateSegue" id="eVU-Wu-suh"/>
+                        <segue destination="Bus-7P-EZv" kind="push" identifier="ArticalDetailSegue" id="piQ-x0-Ubk"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
@@ -97,6 +99,9 @@
                                         <state key="normal" title="置顶">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="topArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="gUt-pV-IO0"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="iNu-NZ-xVn">
                                         <rect key="frame" x="234" y="13" width="30" height="30"/>
@@ -104,6 +109,9 @@
                                         <state key="normal" title="删除">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="deleteArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="tAW-Qk-QO5"/>
+                                        </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="P3A-BI-wDZ">
                                         <rect key="frame" x="53" y="13" width="30" height="30"/>
@@ -111,6 +119,9 @@
                                         <state key="normal" title="审核">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
+                                        <connections>
+                                            <action selector="checkArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="biw-qk-BjR"/>
+                                        </connections>
                                     </button>
                                 </subviews>
                                 <color key="backgroundColor" red="0.95686274509803926" green="0.95686274509803926" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
@@ -157,13 +168,13 @@
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" id="4kc-Un-Psz">
-                                <rect key="frame" x="0.0" y="402" width="320" height="84"/>
+                                <rect key="frame" x="0.0" y="484" width="320" height="84"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="rHF-Rq-iu4">
-                                        <rect key="frame" x="23" y="8" width="68" height="68"/>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="rHF-Rq-iu4">
+                                        <rect key="frame" x="26" y="10" width="62" height="63"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <state key="normal" title="照片">
+                                        <state key="normal" image="upload.png">
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
@@ -180,6 +191,16 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" id="4Pq-Eh-lwE">
+                                <rect key="frame" x="0.0" y="416" width="320" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="选择所属页面和模块">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <segue destination="CDf-GY-yhk" kind="push" identifier="SelectModuleSegue" id="YNY-v8-7d8"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -195,10 +216,57 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="contentTextView" destination="jzr-BV-GJR" id="iL4-WN-P9y"/>
+                        <outlet property="selectImageButton" destination="rHF-Rq-iu4" id="Bhg-jV-B2P"/>
+                        <outlet property="selectModuleBtn" destination="4Pq-Eh-lwE" id="teB-5j-NnB"/>
+                        <outlet property="titleTextField" destination="mPy-xp-xYg" id="QH8-t1-3ka"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="edF-Zx-aWy" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1590" y="50"/>
+        </scene>
+        <!--选择页面和模块-->
+        <scene sceneID="mvR-g2-zhG">
+            <objects>
+                <tableViewController id="CDf-GY-yhk" customClass="PageAndModuleTableViewController" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="vu5-Az-img">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="ModuleCell" textLabel="1aj-rZ-cu1" detailTextLabel="fgF-ce-RkS" style="IBUITableViewCellStyleValue1" id="FTz-Ec-DJP">
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="FTz-Ec-DJP" id="Q6i-4A-kNb">
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Title" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="1aj-rZ-cu1">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="fgF-ce-RkS">
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                            <color key="textColor" red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="calibratedRGB"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                </tableViewCellContentView>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="CDf-GY-yhk" id="wAJ-DP-oou"/>
+                            <outlet property="delegate" destination="CDf-GY-yhk" id="sFQ-8D-LO8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="选择页面和模块" id="nxV-35-Ij8"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Bvd-mt-WGd" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1979" y="49"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="hWr-wC-q8H">
@@ -277,6 +345,9 @@
             <point key="canvasLocation" x="270.93333333333334" y="-270.74666666666667"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="upload.png" width="62" height="63"/>
+    </resources>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">
         <simulatedStatusBarMetrics key="statusBar"/>
         <simulatedOrientationMetrics key="orientation"/>

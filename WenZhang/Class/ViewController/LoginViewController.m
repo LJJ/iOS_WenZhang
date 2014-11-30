@@ -40,14 +40,19 @@
 
 #pragma mark - actions
 - (IBAction)login:(UIButton *)sender {
+    [[NSUserDefaults standardUserDefaults] setObject:_userNameTF.text forKey:CONKeyUserName];
     [_dataModel userLoginWithUserName:_userNameTF.text password:_password.text success:^(BaseDataModel *dataModel, id responseObject) {
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
             if ([responseObject[@"message"] isEqualToString:@"success"]) {
                 [self back:sender];
+                [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:CONKeyIsLogin];
+                [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"UserID"] forKey:CONKeyUserId];
+                [[NSUserDefaults standardUserDefaults] setObject:_password.text forKey:CONkeyPassword];
             }
         }
     } failure:^(BaseDataModel *dataModel, NSError *error) {
-        
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:CONKeyIsLogin];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:CONkeyPassword];
     }];
 }
 

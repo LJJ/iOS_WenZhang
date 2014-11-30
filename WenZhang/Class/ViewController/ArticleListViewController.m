@@ -34,6 +34,7 @@
     _isLoading = NO;
     self.articleData = [[NSMutableArray alloc] initWithCapacity:20];
     _listType = ArticleListAll;
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(p_refreshArticleList) name:CONNotificationArticleListChanged object:nil];
 }
 
 - (void)viewDidLoad
@@ -42,10 +43,15 @@
     [self p_loadMoreArticle];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:CONNotificationArticleListChanged object:nil];
+}
+
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender
 {
     if ([segue.identifier isEqualToString:@"ArticalDetailSegue"]) {
-        ((ArticleDetailViewController *)segue.destinationViewController).foldId = [_articleData[[_articleTV indexPathForSelectedRow].row][@"Info_ID"] integerValue];
+        ((ArticleDetailViewController *)segue.destinationViewController).infoId = [_articleData[[_articleTV indexPathForSelectedRow].row][@"Info_ID"] integerValue];
     }
 }
 
@@ -81,6 +87,14 @@
             [self.footerView footerViewShowStatus:[error.userInfo objectForKey:NSLocalizedDescriptionKey] refreshMode:YES addTarget:self selector:@selector(p_loadMoreArticle)];
         }];
     }
+}
+
+- (void)p_refreshArticleList
+{
+    _isLoading = NO;
+    _currentPage = 0;
+    [_articleData removeAllObjects];
+    [self p_loadMoreArticle];
 }
 
 #pragma mark - actions
@@ -119,6 +133,9 @@
     [[MoreMenu sharedMoreView].firstButton addTarget:self action:@selector(createArticle:) forControlEvents:UIControlEventTouchUpInside];
     [[MoreMenu sharedMoreView].secondButton addTarget:self action:@selector(login:) forControlEvents:UIControlEventTouchUpInside];
 }
+- (IBAction)editArticle:(UIBarButtonItem *)sender {
+    _articleTV.editing = YES;
+}
 
 - (void)createArticle:(UIButton *)sender
 {
@@ -131,6 +148,7 @@
     [self performSegueWithIdentifier:@"LoginSegue" sender:self];
     [[MoreMenu sharedMoreView] removeFromSuperview];
 }
+
 
 #pragma mark - UITableView DataSource
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -167,6 +185,19 @@
     }
 }
 
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if (_articleTV.editing) {
+        
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"ArticalDetailSegue" sender:self];
+    }
+}
+
+//- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+
 #pragma mark - article source menu delegate
 - (void)articleSourceMenuSelectSourceAtRow:(NSInteger)row
 {
@@ -185,9 +216,7 @@
             break;
     }
     
-    _isLoading = NO;
-    [_articleData removeAllObjects];
-    [self p_loadMoreArticle];
+    [self p_refreshArticleList];
 }
 
 @end

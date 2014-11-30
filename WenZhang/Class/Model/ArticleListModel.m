@@ -148,6 +148,23 @@
     }];
 }
 
+- (void)articleGetPagesAndModulesWithPageId:(NSInteger)pageId
+                                moduleWhere:(NSString *)moduleWhere
+                                    success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                    failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
+{
+    NSDictionary *parameters = @{
+                                 @"moduleWhere":moduleWhere,
+                                 @"modulePageId":@(pageId),
+                                 @"action":@"AllWebModule"
+                                 };
+    [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+        successBlk(self, responseObject);
+    } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        failBlk(self,error);
+    }];
+}
+
 - (void)updateArticleDataWithAction:(ArticleUpdateType)type
                              infoId:(NSInteger)infoId
                               title:(NSString *)title
@@ -159,6 +176,11 @@
                             created:(NSString *)created
                                 top:(NSInteger)top
                          checkState:(NSInteger)checkState
+                          infoValue:(NSString *)value
+                             pageId:(NSInteger)pageId
+                           moduleId:(NSInteger)moduleId
+                            infoimg:(NSString *)img
+                         infoCreate:(NSInteger)userId
                             success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                             failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
@@ -177,14 +199,19 @@
                                  @"action":actionStr,
                                  @"infoId":@(infoId),
                                  @"infoTitle":title,
-                                 @"infoSource":source,
-                                 @"infoAuthorName":authorName,
-                                 @"infoEdit":edit,
-                                 @"infoRedirectUrl":redirectUrl,
-                                 @"infoRemark":remark,
-                                 @"infoCreated":created,
-                                 @"infoTop":@(top),
-                                 @"infoCheckState":@(checkState)
+//                                 @"infoSource":source,       这些暂时可以不传
+//                                 @"infoAuthorName":authorName,
+//                                 @"infoEdit":edit,
+//                                 @"infoRedirectUrl":redirectUrl,
+//                                 @"infoRemark":remark,
+//                                 @"infoCreated":created,
+//                                 @"infoTop":@(top),
+//                                 @"infoCheckState":@(checkState),
+//                                 @"infoValue":value,
+                                 @"infoPageID":@(pageId),
+                                 @"infoModuleID":@(moduleId),
+                                 @"infoimg":img,
+                                 @"infoCreateUser":@(userId)
                                  };
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlk(self, responseObject);
