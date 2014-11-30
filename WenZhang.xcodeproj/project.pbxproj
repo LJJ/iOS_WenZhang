@@ -55,6 +55,7 @@
 		29B5CED31A2B1F54000AF487 /* check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29B5CED01A2B1F54000AF487 /* check@2x.png */; };
 		29B5CED41A2B1F54000AF487 /* delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29B5CED11A2B1F54000AF487 /* delete@2x.png */; };
 		29B5CED51A2B1F54000AF487 /* top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29B5CED21A2B1F54000AF487 /* top@2x.png */; };
+		29B5CED71A2B38DB000AF487 /* launch@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29B5CED61A2B38DB000AF487 /* launch@2x.png */; };
 		29B96F2E1A1C91730008ADC4 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B96F2D1A1C91730008ADC4 /* main.m */; };
 		29B96F311A1C91730008ADC4 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B96F301A1C91730008ADC4 /* AppDelegate.m */; };
 		29B96F371A1C91730008ADC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 29B96F351A1C91730008ADC4 /* Main.storyboard */; };
@@ -163,6 +164,7 @@
 		29B5CED01A2B1F54000AF487 /* check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "check@2x.png"; sourceTree = "<group>"; };
 		29B5CED11A2B1F54000AF487 /* delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "delete@2x.png"; sourceTree = "<group>"; };
 		29B5CED21A2B1F54000AF487 /* top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "top@2x.png"; sourceTree = "<group>"; };
+		29B5CED61A2B38DB000AF487 /* launch@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "launch@2x.png"; sourceTree = "<group>"; };
 		29B96F281A1C91730008ADC4 /* WenZhang.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WenZhang.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		29B96F2C1A1C91730008ADC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		29B96F2D1A1C91730008ADC4 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 		29E2D0B41A279DBD00472E02 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				29B5CED61A2B38DB000AF487 /* launch@2x.png */,
 				29B5CED01A2B1F54000AF487 /* check@2x.png */,
 				29B5CED11A2B1F54000AF487 /* delete@2x.png */,
 				29B5CED21A2B1F54000AF487 /* top@2x.png */,
@@ -585,6 +588,7 @@
 				29B96F391A1C91730008ADC4 /* Images.xcassets in Resources */,
 				29B5CEC21A2B0FC8000AF487 /* loginIcon@2x.png in Resources */,
 				29B5CECA1A2B1A3F000AF487 /* more@2x.png in Resources */,
+				29B5CED71A2B38DB000AF487 /* launch@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
