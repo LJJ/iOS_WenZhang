@@ -44,6 +44,14 @@
     [self p_loadMoreArticle];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+//    if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
+//        self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyUserName] style:UIBarButtonItemStylePlain target:nil action:nil];
+//        [self.navigationItem.leftBarButtonItem setTintColor:[UIColor whiteColor]];
+//    }
+}
+
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self name:CONNotificationArticleListChanged object:nil];
@@ -61,7 +69,7 @@
 {
     if (!_isLoading) {
         _isLoading = YES;
-        [_footerView footerViewShowStatus:@"正在读取订单列表" isLoading:YES];
+        [_footerView footerViewShowStatus:@"正在读取文正列表" isLoading:YES];
         _currentPage ++;
         
         [_dataModel articleListGetListWithType:_listType pageSize:10 pageIndex:_currentPage orderBy:@"" strWhere:@"" success:^(BaseDataModel *dataModel, id responseObject) {
@@ -69,7 +77,7 @@
                 [self.articleData addObjectsFromArray:responseObject[@"rows"]];
                 [self.articleTV reloadData];
                 if ([self.articleData count] <1) {
-                    [self.footerView footerViewShowStatus:@"您目前没有订单" isLoading:NO];
+                    [self.footerView footerViewShowStatus:@"无数据" isLoading:NO];
                 }
                 else if (self.currentPage == [self.pageInfo[@"pages"] integerValue]) {
                     [self.footerView resignFirstResponse];
@@ -158,6 +166,7 @@
         [[MoreMenu sharedMoreView].secondButton setTitle:@"登录" forState:UIControlStateNormal];
         [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:CONKeyIsLogin];
         [SVProgressHUD showSuccessWithStatus:@"账号已注销"];
+//        self.navigationItem.leftBarButtonItem = nil;
     }
     else
     {

@@ -10,7 +10,7 @@
 #import "ArticleListModel.h"
 #import "MoreMenu.h"
 
-@interface LoginViewController ()
+@interface LoginViewController ()<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *userNameTF;
 @property (weak, nonatomic) IBOutlet UITextField *password;
 @property (nonatomic, strong) ArticleListModel *dataModel;
@@ -18,9 +18,15 @@
 @property (weak, nonatomic) IBOutlet UIButton *backBtn;
 @property (weak, nonatomic) IBOutlet UIView *loginUserBV;
 @property (weak, nonatomic) IBOutlet UIView *loginPasswordBV;
+
+@property (nonatomic, assign) dispatch_once_t once;
 @end
 
 @implementation LoginViewController
+
+- (void)awakeFromNib
+{
+}
 
 - (void)loadView
 {
@@ -68,6 +74,8 @@
 
 #pragma mark - actions
 - (IBAction)login:(UIButton *)sender {
+    [SVProgressHUD showWithStatus:@"正在登录"];
+    sender.enabled = NO;
     [[NSUserDefaults standardUserDefaults] setObject:_userNameTF.text forKey:CONKeyUserName];
     [_dataModel userLoginWithUserName:_userNameTF.text password:_password.text success:^(BaseDataModel *dataModel, id responseObject) {
         if ([responseObject isKindOfClass:[NSDictionary class]]) {
@@ -77,10 +85,14 @@
                 [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"UserID"] forKey:CONKeyUserId];
                 [[NSUserDefaults standardUserDefaults] setObject:_password.text forKey:CONkeyPassword];
                 [[MoreMenu sharedMoreView].secondButton setTitle:@"注销" forState:UIControlStateNormal];
+                [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"CName"] forKey:CONKeyUserAlias];
             }
         }
+        [SVProgressHUD showSuccessWithStatus:@"登录成功"];
+        sender.enabled = YES;
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
+        sender.enabled = YES;
     }];
 }
 
@@ -88,6 +100,34 @@
     [self dismissViewControllerAnimated:YES completion:^{
         
     }];
+}
+
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField
+{
+        if (self.view.frame.size.height <481) {
+            [UIView animateWithDuration:0.2 animations:^{
+                self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y-100, self.view.frame.size.width, self.view.frame.size.height);
+            }];
+            
+        }
+    return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField
+{
+    if (self.view.frame.size.height <481) {
+        [UIView animateWithDuration:0.2 animations:^{
+            self.view.frame = CGRectMake(self.view.frame.origin.x, self.view.frame.origin.y+100, self.view.frame.size.width, self.view.frame.size.height);
+        }];
+    }
+    return YES;
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [textField resignFirstResponder];
+    return YES;
 }
 
 @end

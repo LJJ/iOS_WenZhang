@@ -157,15 +157,11 @@
     }];
 }
 
-- (void)articleGetPagesAndModulesWithPageId:(NSInteger)pageId
-                                moduleWhere:(NSString *)moduleWhere
-                                    success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+- (void)articleGetPagesAndModulesSuccess:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                                     failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk
 {
     NSDictionary *parameters = @{
-                                 @"moduleWhere":moduleWhere,
-                                 @"modulePageId":@(pageId),
-                                 @"action":@"AllWebModule"
+                                 @"action":@"AllWebPageModule"
                                  };
     [self.httpManager POST:[WebRequestUtils appRequestHost] parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlk(self, responseObject);
@@ -220,7 +216,7 @@
                                  @"infoId":@(infoId),
                                  @"infoTitle":title,
 //                                 @"infoSource":source,       这些暂时可以不传
-//                                 @"infoAuthorName":authorName,
+                                 @"infoAuthorName":authorName,
 //                                 @"infoEdit":edit,
 //                                 @"infoRedirectUrl":redirectUrl,
 //                                 @"infoRemark":remark,

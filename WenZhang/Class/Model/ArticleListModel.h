@@ -54,10 +54,8 @@ typedef enum
                       success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
                       failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 
-- (void)articleGetPagesAndModulesWithPageId:(NSInteger)pageId
-                                   moduleWhere:(NSString *)moduleWhere
-                                     success:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
-                                     failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
+- (void)articleGetPagesAndModulesSuccess:(void (^)(BaseDataModel *dataModel, id responseObject)) successBlk
+                                         failure:(void (^)(BaseDataModel *dataModel, NSError *error)) failBlk;
 
 - (void)updateArticleDataWithAction:(ArticleUpdateType)type
                              infoId:(NSInteger)infoId

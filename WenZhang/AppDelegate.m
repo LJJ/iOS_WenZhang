@@ -55,8 +55,8 @@
 - (void)launchConfig
 {
     self.dataModel = [[ArticleListModel alloc] init];
-    [_dataModel articleGetPagesAndModulesWithPageId:0 moduleWhere:@"" success:^(BaseDataModel *dataModel, id responseObject) {
-        [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"rows"] forKey:CONkeyPageAndModule];
+    [_dataModel articleGetPagesAndModulesSuccess:^(BaseDataModel *dataModel, id responseObject) {
+        [[NSUserDefaults standardUserDefaults] setObject:responseObject forKey:CONkeyPageAndModule];
         NSLog(@"success load page and module");
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         //how?

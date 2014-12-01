@@ -8,6 +8,7 @@
 
 #import "ArticleSourceMenu.h"
 @interface ArticleSourceMenu()
+@property (nonatomic, strong) UIButton *canvasView;
 @property (weak, nonatomic) IBOutlet UIView *menuBackgroundView;
 @property (weak, nonatomic) IBOutlet UIButton *firstBT;
 @property (weak, nonatomic) IBOutlet UIButton *secondBT;
@@ -31,6 +32,9 @@ static ArticleSourceMenu* instance ;
 
 - (void)awakeFromNib
 {
+    self.canvasView = [[UIButton alloc] init];
+    [_canvasView addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
+    _canvasView.backgroundColor = [UIColor clearColor];
     [_menuBackgroundView.layer setMasksToBounds:YES];
     [_menuBackgroundView.layer setCornerRadius:5];
     for (id aView in _menuBackgroundView.subviews) {
@@ -52,9 +56,12 @@ static ArticleSourceMenu* instance ;
 
 + (void)showFromPoint:(CGPoint)point inView:(UIView *)aView
 {
+    
     if (!instance) {
         [ArticleSourceMenu sharedArticleSourceMenu];
     }
+    instance.canvasView.frame = aView.bounds;
+    [aView addSubview:instance.canvasView];
     instance.frame = CGRectMake(point.x-instance.frame.size.width/2, point.y, instance.frame.size.width, instance.frame.size.height);
     [aView addSubview:instance];
 }
@@ -111,6 +118,12 @@ static ArticleSourceMenu* instance ;
     if ([_delegate respondsToSelector:@selector(articleSourceMenuSelectSourceAtRow:)]) {
         [_delegate articleSourceMenuSelectSourceAtRow:2];
     }
+}
+
+- (void)removeFromSuperview
+{
+    [super removeFromSuperview];
+    [_canvasView removeFromSuperview];
 }
 
 @end

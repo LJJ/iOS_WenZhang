@@ -8,8 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-typedef void (^ModuleSelectBlk)(NSString *moduleName, NSInteger moduleId, NSInteger pageId);
-
 @interface PageAndModuleTableViewController : UITableViewController
-@property (nonatomic, strong) ModuleSelectBlk selectBlk;
+@property (nonatomic, strong) NSString *pageName;
+@property (nonatomic) NSInteger pageId;
 @end

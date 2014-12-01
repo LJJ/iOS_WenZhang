@@ -72,13 +72,39 @@
 {
     [SVProgressHUD showWithStatus:@"正在进行操作"];
     [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:method success:^(BaseDataModel *dataModel, id responseObject) {
-        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"success %d",method]];
+        
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationArticleListChanged object:nil];
-        [SVProgressHUD dismiss];
+        [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"%@操作成功",[self tranlateMethodToName:method]]];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
+}
+
+- (NSString *)tranlateMethodToName:(ArticleListAction)method
+{
+    NSString *resultStr;
+    switch (method) {
+        case ArticleListActionCancelTop:
+            resultStr = @"取消置顶";
+            break;
+        case ArticleListActionCheck:
+            resultStr = @"审核";
+            break;
+        case ArticleListActionCheckFail:
+            resultStr = @"取消审核";
+            break;
+        case ArticleListActionDelete:
+            resultStr = @"删除";
+            break;
+        case ArticleListActionTop:
+            resultStr = @"置顶";
+            break;
+        default:
+            break;
+    }
+    
+    return resultStr;
 }
 
 #pragma mark - action

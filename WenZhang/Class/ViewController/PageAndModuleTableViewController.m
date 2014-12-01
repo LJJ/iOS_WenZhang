@@ -16,7 +16,15 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    self.modules = [[NSUserDefaults standardUserDefaults] objectForKey:CONkeyPageAndModule];
+    if ([self.title isEqualToString:@"page"]) {
+        self.modules = [[NSUserDefaults standardUserDefaults] objectForKey:CONkeyPageAndModule];
+    }
+    else
+    {
+        self.modules = [[NSUserDefaults standardUserDefaults] objectForKey:CONkeyPageAndModule][_pageId][@"pageModules"];
+    }
+    [self.tableView reloadData];
+    
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     
@@ -51,7 +59,8 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"ModuleCell" forIndexPath:indexPath];
     NSDictionary *dict = _modules[indexPath.row];
-    cell.textLabel.text = dict[@"Module_Name"];
+    if([self.title isEqualToString:@"page"])cell.textLabel.text = dict[@"pageName"];
+    else cell.textLabel.text = dict[@"moduleName"];
 //    cell.textLabel.text = dict[@""];
     return cell;
 }
@@ -94,22 +103,35 @@
 #pragma mark - table view delagate
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    if (_selectBlk) {
-        NSDictionary *dict = _modules[indexPath.row];
-        _selectBlk(dict[@"Module_Name"],[dict[@"Module_ID"] integerValue], [dict[@"Module_PageID"] integerValue]);
-        [self.navigationController popViewControllerAnimated:YES];
+    if ([self.title isEqualToString:@"page"]) {
+        [self performSegueWithIdentifier:@"SelectModuleSegue" sender:nil];
     }
-    
+    else
+    {
+        NSDictionary *dict = _modules[indexPath.row];
+        [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationSelectPageAndModule object:@{
+                                                                                                              @"pageId":[NSNumber numberWithInteger:_pageId],
+                                                                                                              @"pageName":_pageName,
+                                                                                                              @"moduleId":dict[@"moduleId"],
+                                                                                                              @"moduleName":dict[@"moduleName"]
+                                                                                                              }];
+    }
 }
 
-/*
+
 #pragma mark - Navigation
 
 // In a storyboard-based application, you will often want to do a little preparation before navigation
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
+    if ([segue.identifier isEqualToString:@"SelectModuleSegue"]) {
+        NSDictionary *dict = _modules[[self.tableView indexPathForSelectedRow].row];
+        ((PageAndModuleTableViewController *)segue.destinationViewController).pageId = [dict[@"pageId"] integerValue];
+        ((PageAndModuleTableViewController *)segue.destinationViewController).pageName = dict[@"pageName"];
+    }
+    
 }
-*/
+
 
 @end

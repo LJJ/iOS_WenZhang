@@ -9,6 +9,7 @@
 #import "MoreMenu.h"
 @interface MoreMenu()
 @property (weak, nonatomic) IBOutlet UIView *menuBackgroundView;
+@property (nonatomic, strong) UIButton *canvasView;
 @end
 
 @implementation MoreMenu
@@ -27,6 +28,9 @@ static MoreMenu* instance ;
 
 - (void)awakeFromNib
 {
+    self.canvasView = [[UIButton alloc] init];
+    [_canvasView addTarget:self action:@selector(removeFromSuperview) forControlEvents:UIControlEventTouchUpInside];
+    _canvasView.backgroundColor = [UIColor clearColor];
     [_menuBackgroundView.layer setMasksToBounds:YES];
     [_menuBackgroundView.layer setCornerRadius:5];
     if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
@@ -48,8 +52,16 @@ static MoreMenu* instance ;
     if (!instance) {
         [MoreMenu sharedMoreView];
     }
+    instance.canvasView.frame = aView.bounds;
+    [aView addSubview:instance.canvasView];
     instance.frame = CGRectMake(point.x-107, point.y, instance.frame.size.width, instance.frame.size.height);
     [aView addSubview:instance];
+}
+
+- (void)removeFromSuperview
+{
+    [super removeFromSuperview];
+    [_canvasView removeFromSuperview];
 }
 
 @end

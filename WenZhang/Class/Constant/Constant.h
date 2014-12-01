@@ -10,6 +10,7 @@
 
 
 #define CONKeyUserName @"CONKeyUserName"
+#define CONKeyUserAlias @"CONKeyUserAlias"
 #define CONKeyUserId @"CONKeyUserId"
 #define CONKeyIsLogin @"CONKeyIsLogin"
 #define CONkeyPassword @"CONkeyPassword"
@@ -17,6 +18,7 @@
 
 
 static NSString *const CONNotificationArticleListChanged = @"CONNotificationArticleListChanged";
+static NSString *const CONNotificationSelectPageAndModule = @"CONNotificationSelectPageAndModule";
 
 #define ALog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
 
