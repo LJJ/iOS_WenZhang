@@ -8,6 +8,7 @@
 
 #import "LoginViewController.h"
 #import "ArticleListModel.h"
+#import "MoreMenu.h"
 
 @interface LoginViewController ()
 @property (weak, nonatomic) IBOutlet UITextField *userNameTF;
@@ -24,9 +25,6 @@
 - (void)loadView
 {
     [super loadView];
-    
-    
-    
     [_loginBtn.layer setMasksToBounds:YES];
     [_loginBtn.layer setCornerRadius:5];
     [_backBtn.layer setMasksToBounds:YES];
@@ -44,6 +42,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
+    
+    _userNameTF.text = [[NSUserDefaults standardUserDefaults] objectForKey:CONKeyUserName];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
+        _password.text = [[NSUserDefaults standardUserDefaults] objectForKey:CONkeyPassword];
+    }
+    
     self.dataModel = [[ArticleListModel alloc] init];
 }
 
@@ -72,11 +76,10 @@
                 [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:YES] forKey:CONKeyIsLogin];
                 [[NSUserDefaults standardUserDefaults] setObject:responseObject[@"UserID"] forKey:CONKeyUserId];
                 [[NSUserDefaults standardUserDefaults] setObject:_password.text forKey:CONkeyPassword];
+                [[MoreMenu sharedMoreView].secondButton setTitle:@"注销" forState:UIControlStateNormal];
             }
         }
     } failure:^(BaseDataModel *dataModel, NSError *error) {
-        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:CONKeyIsLogin];
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:CONkeyPassword];
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
 }

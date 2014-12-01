@@ -159,14 +159,14 @@
                                 <rect key="frame" x="0.0" y="444" width="320" height="60"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P3A-BI-wDZ">
-                                        <rect key="frame" x="33" y="0.0" width="60" height="60"/>
+                                        <rect key="frame" x="23" y="0.0" width="80" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="XsN-PQ-l6Z"/>
+                                            <constraint firstAttribute="width" constant="80" id="XsN-PQ-l6Z"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="titleEdgeInsets" minX="-13" minY="13" maxX="13" maxY="-13"/>
                                         <inset key="imageEdgeInsets" minX="14" minY="-10" maxX="-14" maxY="10"/>
-                                        <state key="normal" title="审核" image="check.png">
+                                        <state key="normal" title="取消审核" image="check.png">
                                             <color key="titleColor" red="0.94117647058823528" green="0.52156862745098043" blue="0.53333333333333333" alpha="1" colorSpace="calibratedRGB"/>
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
@@ -175,9 +175,9 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WK5-0Z-1sB">
-                                        <rect key="frame" x="228" y="0.0" width="60" height="60"/>
+                                        <rect key="frame" x="218" y="0.0" width="80" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="SGf-4r-xOJ"/>
+                                            <constraint firstAttribute="width" constant="80" id="SGf-4r-xOJ"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="titleEdgeInsets" minX="-13" minY="13" maxX="13" maxY="-13"/>
@@ -187,14 +187,13 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="checkArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="BPU-Vs-nya"/>
-                                            <action selector="topArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="rVl-Rq-boZ"/>
+                                            <action selector="deleteArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="yme-c0-kat"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GVc-WV-bfK">
-                                        <rect key="frame" x="130" y="0.0" width="60" height="60"/>
+                                        <rect key="frame" x="120" y="0.0" width="80" height="60"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" constant="60" id="zv8-Kt-HR6"/>
+                                            <constraint firstAttribute="width" constant="80" id="zv8-Kt-HR6"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <inset key="titleEdgeInsets" minX="-13" minY="13" maxX="13" maxY="-13"/>
@@ -204,8 +203,7 @@
                                             <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                         <connections>
-                                            <action selector="checkArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="fL0-d8-eC8"/>
-                                            <action selector="deleteArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="WxS-Jx-eFI"/>
+                                            <action selector="topArticle:" destination="Bus-7P-EZv" eventType="touchUpInside" id="j3c-2W-wHf"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -216,10 +214,10 @@
                                     <constraint firstAttribute="centerX" secondItem="GVc-WV-bfK" secondAttribute="centerX" id="Iht-nf-8K1"/>
                                     <constraint firstItem="GVc-WV-bfK" firstAttribute="top" secondItem="jfH-qV-NXL" secondAttribute="top" id="JLz-Zr-bEI"/>
                                     <constraint firstAttribute="height" constant="60" id="Mqg-ru-H05"/>
-                                    <constraint firstItem="WK5-0Z-1sB" firstAttribute="leading" secondItem="GVc-WV-bfK" secondAttribute="trailing" constant="38" id="Z5t-DN-diq"/>
+                                    <constraint firstItem="WK5-0Z-1sB" firstAttribute="leading" secondItem="GVc-WV-bfK" secondAttribute="trailing" constant="18" id="Z5t-DN-diq"/>
                                     <constraint firstItem="WK5-0Z-1sB" firstAttribute="top" secondItem="jfH-qV-NXL" secondAttribute="top" id="cqy-dG-yle"/>
                                     <constraint firstAttribute="bottom" secondItem="P3A-BI-wDZ" secondAttribute="bottom" id="hQd-hF-JmM"/>
-                                    <constraint firstItem="GVc-WV-bfK" firstAttribute="leading" secondItem="P3A-BI-wDZ" secondAttribute="trailing" constant="37" id="yxW-R9-xRv"/>
+                                    <constraint firstItem="GVc-WV-bfK" firstAttribute="leading" secondItem="P3A-BI-wDZ" secondAttribute="trailing" constant="17" id="yxW-R9-xRv"/>
                                     <constraint firstAttribute="bottom" secondItem="GVc-WV-bfK" secondAttribute="bottom" id="ziI-rw-Crh"/>
                                 </constraints>
                             </view>
@@ -277,9 +275,11 @@
                         </button>
                     </navigationItem>
                     <connections>
+                        <outlet property="checkBtn" destination="P3A-BI-wDZ" id="uFd-Oq-wCV"/>
                         <outlet property="detailTextView" destination="Msh-aU-NFf" id="dsV-cT-heu"/>
                         <outlet property="infoLabel" destination="Zdf-7N-CPB" id="NrC-pi-Ort"/>
                         <outlet property="titleLabel" destination="48g-VA-LHa" id="F25-7t-tDa"/>
+                        <outlet property="topBtn" destination="GVc-WV-bfK" id="xnW-Wo-jY1"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="60Y-mE-GUu" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -528,7 +528,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hI6-x1-Zwm">
                                 <rect key="frame" x="16" y="221" width="288" height="44"/>
                                 <subviews>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="admin" placeholder="用户名" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8rh-yW-DzP">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="用户名" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="8rh-yW-DzP">
                                         <rect key="frame" x="48" y="0.0" width="240" height="44"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="16"/>
@@ -562,7 +562,7 @@
                                             <constraint firstAttribute="width" constant="40" id="0jC-kr-2TK"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Admin12#" placeholder="密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O5G-Pw-6uc">
+                                    <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="密码" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="O5G-Pw-6uc">
                                         <rect key="frame" x="48" y="0.0" width="240" height="44"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="16"/>
                                         <textInputTraits key="textInputTraits" secureTextEntry="YES"/>

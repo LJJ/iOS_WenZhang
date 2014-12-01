@@ -19,6 +19,11 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
     // Override point for customization after application launch.
     [self launchConfig];
+    
+    //第一次打开客户端，将是否登录初始化为未登录
+    if (![[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin]) {
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:CONKeyIsLogin];
+    }
     return YES;
 }
 
@@ -42,6 +47,7 @@
 
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - method

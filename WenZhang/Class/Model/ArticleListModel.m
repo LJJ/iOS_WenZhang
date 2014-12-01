@@ -152,6 +152,7 @@
     } success:^(AFHTTPRequestOperation *operation, id responseObject) {
         successBlk(self, responseObject);
     } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+        [error.userInfo setValue:@"图片上传失败，请重试" forKey:NSLocalizedDescriptionKey];
         failBlk(self,error);
     }];
 }

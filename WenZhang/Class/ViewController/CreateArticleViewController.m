@@ -69,12 +69,12 @@
 
 - (IBAction)postArticle:(UIBarButtonItem *)sender {
     if (_willSendImage) {
+        [SVProgressHUD showWithStatus:@"正在上传图片"];
         [_dataModel uploadingImage:_willSendImage success:^(BaseDataModel *dataModel, id responseObject) {
             if ([responseObject isKindOfClass:[NSDictionary class]] && [responseObject[@"state"] isEqualToString:@"SUCCESS"]) {
                 self.imgUrlStr = responseObject[@"infoimg"];
                 [self p_addArticle];
             }
-            
         } failure:^(BaseDataModel *dataModel, NSError *error) {
             [SVProgressHUD showErrorWithStatus:error.localizedDescription];
         }];
@@ -89,6 +89,11 @@
 
 - (void)p_addArticle
 {
+    [SVProgressHUD showWithStatus:@"正在提交文章"];
+    NSInteger userId = 0;
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
+        userId =[[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyUserId] integerValue];
+    }
     [_dataModel updateArticleDataWithAction:ArticleUpdateAdd
                                      infoId:0
                                       title:_titleTextField.text
@@ -104,11 +109,11 @@
                                      pageId:_pageId
                                    moduleId:_moduleId
                                     infoimg:_imgUrlStr
-                                 infoCreate:[[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyUserId] integerValue]
+                                 infoCreate:userId
                                     success:^(BaseDataModel *dataModel, id responseObject) {
-                                        [SVProgressHUD showSuccessWithStatus:@"成功添加新文章"];
                                         [self.navigationController popViewControllerAnimated:YES];
                                         [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationArticleListChanged object:nil];
+                                        [SVProgressHUD showSuccessWithStatus:@"成功添加新文章"];
                                     }
                                     failure:^(BaseDataModel *dataModel, NSError *error) {
                                         [SVProgressHUD showErrorWithStatus:error.localizedDescription];

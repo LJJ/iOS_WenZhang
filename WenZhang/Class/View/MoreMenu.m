@@ -29,6 +29,9 @@ static MoreMenu* instance ;
 {
     [_menuBackgroundView.layer setMasksToBounds:YES];
     [_menuBackgroundView.layer setCornerRadius:5];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
+        [_secondButton setTitle:@"注销" forState:UIControlStateNormal];
+    }
 }
 
 /*

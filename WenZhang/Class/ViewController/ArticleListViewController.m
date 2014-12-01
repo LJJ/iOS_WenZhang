@@ -147,7 +147,15 @@
 
 - (void)login:(UIButton *)sender
 {
-    [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
+        [[MoreMenu sharedMoreView].secondButton setTitle:@"登录" forState:UIControlStateNormal];
+        [[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:CONKeyIsLogin];
+        [SVProgressHUD showSuccessWithStatus:@"账号已注销"];
+    }
+    else
+    {
+        [self performSegueWithIdentifier:@"LoginSegue" sender:self];
+    }
     [[MoreMenu sharedMoreView] removeFromSuperview];
 }
 

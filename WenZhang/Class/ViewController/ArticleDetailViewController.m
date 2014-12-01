@@ -14,6 +14,8 @@
 @property (nonatomic, strong) ArticleListModel *dataModel;
 @property (weak, nonatomic) IBOutlet UILabel *titleLabel;
 @property (weak, nonatomic) IBOutlet UILabel *infoLabel;
+@property (weak, nonatomic) IBOutlet UIButton *topBtn;
+@property (weak, nonatomic) IBOutlet UIButton *checkBtn;
 @end
 
 @implementation ArticleDetailViewController
@@ -43,10 +45,18 @@
 #pragma mark - method
 - (void)p_loadArticleDetail
 {
+    [SVProgressHUD showWithStatus:@"正在读取文章"];
     [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:ArticleListActionGetDetail success:^(BaseDataModel *dataModel, id responseObject) {
         _detailTextView.text = responseObject[@"Info_Value"];
         _titleLabel.text = responseObject[@"Info_Title"];
         _infoLabel.text = [NSString stringWithFormat:@"作者：%@",responseObject[@"Info_AuthorName"]];
+        if ([responseObject[@"Info_Top"] boolValue]) {
+            [_topBtn setTitle:@"取消置顶" forState:UIControlStateNormal];
+        }
+        if ([responseObject[@"Info_CheckTime"] isKindOfClass:[NSString class]]) {
+            [_checkBtn setTitle:@"取消审核" forState:UIControlStateNormal];
+        }
+        [SVProgressHUD dismiss];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
@@ -54,10 +64,12 @@
 
 - (void)articleAction:(ArticleListAction)method
 {
+    [SVProgressHUD showWithStatus:@"正在进行操作"];
     [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:method success:^(BaseDataModel *dataModel, id responseObject) {
         [SVProgressHUD showSuccessWithStatus:[NSString stringWithFormat:@"success %d",method]];
         [self.navigationController popViewControllerAnimated:YES];
         [[NSNotificationCenter defaultCenter] postNotificationName:CONNotificationArticleListChanged object:nil];
+        [SVProgressHUD dismiss];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
         [SVProgressHUD showErrorWithStatus:error.localizedDescription];
     }];
@@ -69,11 +81,17 @@
 }
 
 - (IBAction)checkArticle:(UIButton *)sender {
-    [self articleAction:ArticleListActionCheck];
+    if ([sender.titleLabel.text isEqualToString:@"取消审核"]) {
+        [self articleAction:ArticleListActionCheckFail];
+    }
+    else [self articleAction:ArticleListActionCheck];
 }
 
 - (IBAction)topArticle:(UIButton *)sender {
-    [self articleAction:ArticleListActionTop];
+    if ([sender.titleLabel.text isEqualToString:@"取消置顶"]) {
+        [self articleAction:ArticleListActionCancelTop];
+    }
+    else [self articleAction:ArticleListActionTop];
 }
 
 - (IBAction)deleteArticle:(UIButton *)sender {
