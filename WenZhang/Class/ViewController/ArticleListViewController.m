@@ -141,8 +141,15 @@
 
 - (void)createArticle:(UIButton *)sender
 {
-    [self performSegueWithIdentifier:@"CreateSegue" sender:self];
-    [[MoreMenu sharedMoreView] removeFromSuperview];
+    if ([[[NSUserDefaults standardUserDefaults] objectForKey:CONKeyIsLogin] boolValue]) {
+        [self performSegueWithIdentifier:@"CreateSegue" sender:self];
+        [[MoreMenu sharedMoreView] removeFromSuperview];
+    }
+    else
+    {
+        [SVProgressHUD showErrorWithStatus:@"创建前请先登录"];
+    }
+    
 }
 
 - (void)login:(UIButton *)sender
@@ -178,7 +185,7 @@
     if (!cell) {
         cell = [[ArticleTableViewCell alloc] initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:identifier];
     }
-    [cell setArticleCellWithTitle:_articleData[indexPath.row][@"Info_Title"] articleContent:_articleData[indexPath.row][@"Info_Value"] time:@""];
+    [cell setArticleCellWithTitle:_articleData[indexPath.row][@"Info_Title"] articleContent:_articleData[indexPath.row][@"Info_Value"] time:[_articleData[indexPath.row][@"Info_CreatedStr"] componentsSeparatedByString:@" "][0]];
     return cell;
 }
 

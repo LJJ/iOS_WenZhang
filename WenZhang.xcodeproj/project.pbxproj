@@ -38,6 +38,8 @@
 		2935E1F11A1DD08B00B367C8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2935E1F01A1DD08B00B367C8 /* CoreGraphics.framework */; };
 		2935E1F31A1DD09B00B367C8 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2935E1F21A1DD09B00B367C8 /* AVFoundation.framework */; };
 		2938E0BF1A29B8160092CDA0 /* btn_gray@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 2938E0BE1A29B8160092CDA0 /* btn_gray@2x.png */; };
+		29657E711A2C486600544325 /* cancel_check@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29657E6F1A2C486600544325 /* cancel_check@2x.png */; };
+		29657E721A2C486600544325 /* cancel_top@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 29657E701A2C486600544325 /* cancel_top@2x.png */; };
 		299C82A71A1DD67F00427F5F /* OpenUDID.m in Sources */ = {isa = PBXBuildFile; fileRef = 299C82A61A1DD67F00427F5F /* OpenUDID.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		29A8794B1A1F2FBE00AC5667 /* ArticleListModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A8794A1A1F2FBE00AC5667 /* ArticleListModel.m */; };
 		29A879511A1F434900AC5667 /* ArticleListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 29A879501A1F434900AC5667 /* ArticleListViewController.m */; };
@@ -140,6 +142,8 @@
 		2935E1F01A1DD08B00B367C8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		2935E1F21A1DD09B00B367C8 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		2938E0BE1A29B8160092CDA0 /* btn_gray@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_gray@2x.png"; sourceTree = "<group>"; };
+		29657E6F1A2C486600544325 /* cancel_check@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel_check@2x.png"; sourceTree = "<group>"; };
+		29657E701A2C486600544325 /* cancel_top@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "cancel_top@2x.png"; sourceTree = "<group>"; };
 		299C82A51A1DD67F00427F5F /* OpenUDID.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OpenUDID.h; sourceTree = "<group>"; };
 		299C82A61A1DD67F00427F5F /* OpenUDID.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OpenUDID.m; sourceTree = "<group>"; };
 		29A879491A1F2FBE00AC5667 /* ArticleListModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ArticleListModel.h; sourceTree = "<group>"; };
@@ -462,6 +466,8 @@
 		29E2D0B41A279DBD00472E02 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				29657E6F1A2C486600544325 /* cancel_check@2x.png */,
+				29657E701A2C486600544325 /* cancel_top@2x.png */,
 				29B5CED61A2B38DB000AF487 /* launch@2x.png */,
 				29B5CED01A2B1F54000AF487 /* check@2x.png */,
 				29B5CED11A2B1F54000AF487 /* delete@2x.png */,
@@ -579,12 +585,14 @@
 				29E2D0B61A279DC800472E02 /* arrow@2x.png in Resources */,
 				29B5CED41A2B1F54000AF487 /* delete@2x.png in Resources */,
 				29B96F3C1A1C91730008ADC4 /* LaunchScreen.xib in Resources */,
+				29657E721A2C486600544325 /* cancel_top@2x.png in Resources */,
 				29B5CEC61A2B11D3000AF487 /* login_user@2x.png in Resources */,
 				29B5CEC51A2B11D3000AF487 /* login_password@2x.png in Resources */,
 				29B5CEC81A2B193C000AF487 /* source@2x.png in Resources */,
 				29B5CED51A2B1F54000AF487 /* top@2x.png in Resources */,
 				29B5CED31A2B1F54000AF487 /* check@2x.png in Resources */,
 				2935E1DA1A1DCE9800B367C8 /* LICENSE in Resources */,
+				29657E711A2C486600544325 /* cancel_check@2x.png in Resources */,
 				29B96F391A1C91730008ADC4 /* Images.xcassets in Resources */,
 				29B5CEC21A2B0FC8000AF487 /* loginIcon@2x.png in Resources */,
 				29B5CECA1A2B1A3F000AF487 /* more@2x.png in Resources */,

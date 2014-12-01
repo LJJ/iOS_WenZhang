@@ -49,12 +49,18 @@
     [_dataModel articleListHandleSingleWithArticleId:_infoId andAction:ArticleListActionGetDetail success:^(BaseDataModel *dataModel, id responseObject) {
         _detailTextView.text = responseObject[@"Info_Value"];
         _titleLabel.text = responseObject[@"Info_Title"];
-        _infoLabel.text = [NSString stringWithFormat:@"作者：%@",responseObject[@"Info_AuthorName"]];
+        _infoLabel.text = [NSString stringWithFormat:@"编著者：%@    %@",responseObject[@"Info_AuthorName"], [responseObject[@"Info_CreatedStr"] componentsSeparatedByString:@" "][0]];
         if ([responseObject[@"Info_Top"] boolValue]) {
             [_topBtn setTitle:@"取消置顶" forState:UIControlStateNormal];
+            [_topBtn setTitleColor:RGB(172, 172, 172) forState:UIControlStateNormal];
+            [_topBtn setImageEdgeInsets:UIEdgeInsetsMake(-10, 28, 10, -28)];
+            [_topBtn setImage:[UIImage imageNamed:@"cancel_top.png"] forState:UIControlStateNormal];
         }
-        if ([responseObject[@"Info_CheckTime"] isKindOfClass:[NSString class]]) {
+        if ([responseObject[@"Info_CheckAdvice"] isKindOfClass:[NSString class]] && [responseObject[@"Info_CheckAdvice"] isEqualToString:@"通过"]) {
             [_checkBtn setTitle:@"取消审核" forState:UIControlStateNormal];
+            [_checkBtn setTitleColor:RGB(172, 172, 172) forState:UIControlStateNormal];
+            [_checkBtn setImageEdgeInsets:UIEdgeInsetsMake(-10, 28, 10, -28)];
+            [_checkBtn setImage:[UIImage imageNamed:@"cancel_check.png"] forState:UIControlStateNormal];
         }
         [SVProgressHUD dismiss];
     } failure:^(BaseDataModel *dataModel, NSError *error) {
