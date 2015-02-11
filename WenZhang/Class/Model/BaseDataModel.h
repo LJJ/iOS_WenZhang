@@ -9,6 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "JSONKit.h"
 #import "AFHTTPRequestOperationManager.h"
+#import "AFHTTPRequestOperation.h"
+#import "WebRequestUtils.h"
 @class BaseDataModel;
 
 @interface BaseDataModel : NSObject

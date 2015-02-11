@@ -7,9 +7,10 @@
 //
 
 #import "ArticleListModel.h"
-#import "WebRequestUtils.h"
+
 
 @interface ArticleListModel()
+@property (nonatomic, strong) NSOperationQueue *queue;
 @end
 
 @implementation ArticleListModel
